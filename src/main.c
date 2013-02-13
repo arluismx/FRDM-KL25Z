@@ -66,9 +66,7 @@ static void delay_ms(uint32_t dlyTicks) {
 int main(void) {
 	SystemCoreClockUpdate();				/* Get Core Clock Frequency		*/
 	SysTick_Config(SystemCoreClock / 1000);	/* Generate interrupt each 1 ms	*/
-
-	SIM->SCGC5 |= 0x3E00;					/* Enable all GPIO clocks		*/
-	GPIO_init();
+	GPIO_init();							/* Initialize GPIOs				*/
 
 	for (;;) {
 		GPIO_reset(Onboard, 0);

@@ -199,11 +199,13 @@ PORT_PIN_t ArduinoD_Port_Pin[] = {
 void GPIO_init(void) {
 	uint8_t i;
 
+	SIM->SCGC5 |= 0x3E00;					/* Enable all GPIO clocks		*/
+
 	for (i = 0; i < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (Onboard_Port_Pin[i].GPIOx != 0) {
 			/* Port is GPIO, Output is 0, Direction is Output */
-			FGPIO_TO_PORT(Onboard_Port_Pin[i].GPIOx)->PCR[PIN_TO_BIT(Onboard_Port_Pin[i].Pin)] =
-			        (1UL << 8);
+			FGPIO_TO_PORT(Onboard_Port_Pin[i].GPIOx)->
+					PCR[PIN_TO_BIT(Onboard_Port_Pin[i].Pin)] = (1UL << 8);
 			Onboard_Port_Pin[i].GPIOx->PDOR |= Onboard_Port_Pin[i].Pin;
 			Onboard_Port_Pin[i].GPIOx->PDDR |= Onboard_Port_Pin[i].Pin;
 		}
@@ -212,8 +214,8 @@ void GPIO_init(void) {
 	for (i = 0; i < sizeof(HeaderJ1_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (HeaderJ1_Port_Pin[i].GPIOx != 0) {
 			/* Port is GPIO, Output is 0, Direction is Output */
-			FGPIO_TO_PORT(HeaderJ1_Port_Pin[i].GPIOx)->PCR[PIN_TO_BIT(HeaderJ1_Port_Pin[i].Pin)] =
-			        (1UL << 8);
+			FGPIO_TO_PORT(HeaderJ1_Port_Pin[i].GPIOx)->
+					PCR[PIN_TO_BIT(HeaderJ1_Port_Pin[i].Pin)] = (1UL << 8);
 			HeaderJ1_Port_Pin[i].GPIOx->PDOR |= HeaderJ1_Port_Pin[i].Pin;
 			HeaderJ1_Port_Pin[i].GPIOx->PDDR |= HeaderJ1_Port_Pin[i].Pin;
 		}
@@ -222,8 +224,8 @@ void GPIO_init(void) {
 	for (i = 0; i < sizeof(HeaderJ2_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (HeaderJ2_Port_Pin[i].GPIOx != 0) {
 			/* Port is GPIO, Output is 0, Direction is Output */
-			FGPIO_TO_PORT(HeaderJ2_Port_Pin[i].GPIOx)->PCR[PIN_TO_BIT(HeaderJ2_Port_Pin[i].Pin)] =
-			        (1UL << 8);
+			FGPIO_TO_PORT(HeaderJ2_Port_Pin[i].GPIOx)->
+					PCR[PIN_TO_BIT(HeaderJ2_Port_Pin[i].Pin)] = (1UL << 8);
 			HeaderJ2_Port_Pin[i].GPIOx->PDOR |= HeaderJ2_Port_Pin[i].Pin;
 			HeaderJ2_Port_Pin[i].GPIOx->PDDR |= HeaderJ2_Port_Pin[i].Pin;
 		}
@@ -232,8 +234,8 @@ void GPIO_init(void) {
 	for (i = 0; i < sizeof(HeaderJ9_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (HeaderJ9_Port_Pin[i].GPIOx != 0) {
 			/* Port is GPIO, Output is 0, Direction is Output */
-			FGPIO_TO_PORT(HeaderJ9_Port_Pin[i].GPIOx)->PCR[PIN_TO_BIT(HeaderJ9_Port_Pin[i].Pin)] =
-			        (1UL << 8);
+			FGPIO_TO_PORT(HeaderJ9_Port_Pin[i].GPIOx)->
+					PCR[PIN_TO_BIT(HeaderJ9_Port_Pin[i].Pin)] = (1UL << 8);
 			HeaderJ9_Port_Pin[i].GPIOx->PDOR |= HeaderJ9_Port_Pin[i].Pin;
 			HeaderJ9_Port_Pin[i].GPIOx->PDDR |= HeaderJ9_Port_Pin[i].Pin;
 		}
@@ -242,8 +244,8 @@ void GPIO_init(void) {
 	for (i = 0; i < sizeof(HeaderJ10_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (HeaderJ10_Port_Pin[i].GPIOx != 0) {
 			/* Port is GPIO, Output is 0, Direction is Output */
-			FGPIO_TO_PORT(HeaderJ10_Port_Pin[i].GPIOx)->PCR[PIN_TO_BIT(HeaderJ10_Port_Pin[i].Pin)] =
-			        (1UL << 8);
+			FGPIO_TO_PORT(HeaderJ10_Port_Pin[i].GPIOx)->
+					PCR[PIN_TO_BIT(HeaderJ10_Port_Pin[i].Pin)] = (1UL << 8);
 			HeaderJ10_Port_Pin[i].GPIOx->PDOR |= HeaderJ10_Port_Pin[i].Pin;
 			HeaderJ10_Port_Pin[i].GPIOx->PDDR |= HeaderJ10_Port_Pin[i].Pin;
 		}

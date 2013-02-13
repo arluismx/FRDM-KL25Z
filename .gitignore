@@ -9,6 +9,7 @@
 *.cogui
 project.pbxproj
 history.xml
+dependencies.xml
 
 # Compiled source
 *.o
