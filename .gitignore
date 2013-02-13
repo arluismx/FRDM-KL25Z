@@ -7,8 +7,11 @@
 # CoIDE
 *.coproj
 *.cogui
+project.pbxproj
+history.xml
 
 # Compiled source
+*.o
 *.elf
 *.hex
 *.map
