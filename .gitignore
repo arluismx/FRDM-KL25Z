@@ -1,0 +1,24 @@
+# Eclipse
+.project
+.metadata
+.classpath
+.settings
+
+# CoIDE
+*.coproj
+*.cogui
+
+# Compiled source
+*.elf
+*.hex
+*.map
+*.bin
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
