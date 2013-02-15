@@ -11,8 +11,9 @@
 /*
  * functions global:
  *				GPIO_init
- *				GPIO_set
- *				GPIO_reset
+ *				GPIO_bit_set
+ *				GPIO_bit_reset
+ *				GPIO_port_set
  * functions local:
  *				.
  *
@@ -68,8 +69,9 @@ typedef enum _PORT_NAME {
 
 /*----- Function prototypes ------------------------------------------------*/
 extern void GPIO_init(void);
-extern void GPIO_set(PORT_NAME port, uint8_t bit);
-extern void GPIO_reset(PORT_NAME port, uint8_t bit);
+extern void GPIO_bit_set(PORT_NAME port, uint8_t bit);
+extern void GPIO_bit_reset(PORT_NAME port, uint8_t bit);
+extern void GPIO_port_set(PORT_NAME port, uint16_t value);
 
 /*----- Data ---------------------------------------------------------------*/
 

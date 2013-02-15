@@ -9,8 +9,9 @@
 /*
  * functions global:
  *				GPIO_init
- *				GPIO_set
- *				GPIO_reset
+ *				GPIO_bit_set
+ *				GPIO_bit_reset
+ *				GPIO_port_set
  * functions local:
  *				.
  *
@@ -254,7 +255,7 @@ void GPIO_init(void) {
 
 /**
  *****************************************************************************
- * \fn			GPIO_set
+ * \fn			GPIO_bit_set
  * \brief		Set a GPIO bit on the specific port.
  *
  * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
@@ -262,7 +263,7 @@ void GPIO_init(void) {
  * \param[in]	bit: Specify the bit number on the port.
  *****************************************************************************
  */
-void GPIO_set(PORT_NAME port, uint8_t bit) {
+void GPIO_bit_set(PORT_NAME port, uint8_t bit) {
 	switch (port) {
 	case Onboard:
 		if (bit < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t)
@@ -313,7 +314,7 @@ void GPIO_set(PORT_NAME port, uint8_t bit) {
 
 /**
  *****************************************************************************
- * \fn			GPIO_reset
+ * \fn			GPIO_bit_reset
  * \brief		Set a GPIO bit on the specific port.
  *
  * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
@@ -321,7 +322,7 @@ void GPIO_set(PORT_NAME port, uint8_t bit) {
  * \param[in]	bit: Specify the bit number on the port.
  *****************************************************************************
  */
-void GPIO_reset(PORT_NAME port, uint8_t bit) {
+void GPIO_bit_reset(PORT_NAME port, uint8_t bit) {
 	switch (port) {
 	case Onboard:
 		if (bit < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t)
@@ -363,6 +364,117 @@ void GPIO_reset(PORT_NAME port, uint8_t bit) {
 		if (bit < sizeof(ArduinoD_Port_Pin) / sizeof(PORT_PIN_t)
 		        && ArduinoD_Port_Pin[bit].GPIOx != 0) {
 			ArduinoD_Port_Pin[bit].GPIOx->PCOR = ArduinoD_Port_Pin[bit].Pin;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+/**
+ *****************************************************************************
+ * \fn			GPIO_port_set
+ * \brief		Set a GPIO port to a value.
+ *
+ * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
+ *				HeaderJ2, HeaderJ9, HeaderJ10, ArduinoA, ArduinoD.
+ * \param[in]	value: Value to set to the port.
+ *****************************************************************************
+ */
+void GPIO_port_set(PORT_NAME port, uint16_t value) {
+	uint8_t i;
+	uint16_t bit = 1U;
+
+	switch (port) {
+	case Onboard:
+		for (i = 0; i < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (Onboard_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					Onboard_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					Onboard_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case HeaderJ1:
+		for (i = 0; i < sizeof(HeaderJ1_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (HeaderJ1_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					HeaderJ1_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					HeaderJ1_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case HeaderJ2:
+		for (i = 0; i < sizeof(HeaderJ2_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (HeaderJ2_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					HeaderJ2_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					HeaderJ2_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case HeaderJ9:
+		for (i = 0; i < sizeof(HeaderJ9_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (HeaderJ9_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					HeaderJ9_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					HeaderJ9_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case HeaderJ10:
+		for (i = 0; i < sizeof(HeaderJ10_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (HeaderJ10_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					HeaderJ10_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					HeaderJ10_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case ArduinoA:
+		for (i = 0; i < sizeof(ArduinoA_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (ArduinoA_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					ArduinoA_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					ArduinoA_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
+		}
+		break;
+	case ArduinoD:
+		for (i = 0; i < sizeof(ArduinoD_Port_Pin) / sizeof(PORT_PIN_t); i++) {
+			if (ArduinoD_Port_Pin[i].GPIOx != 0) {
+				if (value & bit) {
+					ArduinoD_Port_Pin[bit].GPIOx->PSOR = bit;
+				}
+				else {
+					ArduinoD_Port_Pin[bit].GPIOx->PCOR = bit;
+				}
+			}
+			bit <<= 1;
 		}
 		break;
 	default:

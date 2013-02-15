@@ -69,16 +69,16 @@ int main(void) {
 	GPIO_init();							/* Initialize GPIOs				*/
 
 	for (;;) {
-		GPIO_reset(Onboard, 0);
+		GPIO_bit_reset(Onboard, 0);
 		delay_ms(500);
-		GPIO_set(Onboard, 0);
+		GPIO_bit_set(Onboard, 0);
 
-		GPIO_reset(Onboard, 1);
+		GPIO_bit_reset(Onboard, 1);
 		delay_ms(500);
-		GPIO_set(Onboard, 1);
+		GPIO_bit_set(Onboard, 1);
 
-		GPIO_reset(Onboard, 2);
+		GPIO_bit_reset(Onboard, 2);
 		delay_ms(500);
-		GPIO_set(Onboard, 2);
+		GPIO_bit_set(Onboard, 2);
 	}
 }
