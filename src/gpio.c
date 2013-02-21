@@ -206,7 +206,10 @@ PORT_PIN_t ArduinoD_Port_Pin[] = {
 void GPIO_init(void) {
 	uint8_t i;
 
-	SIM->SCGC5 |= 0x00003E00;				/* Enable all GPIO clocks		*/
+	/* Enable all GPIO clocks */
+	SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK
+			| SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK
+	        | SIM_SCGC5_PORTE_MASK;
 
 	for (i = 0; i < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (Onboard_Port_Pin[i].GPIOx != 0) {
