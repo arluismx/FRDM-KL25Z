@@ -59,7 +59,7 @@ static void delay_ms(uint32_t dlyTicks) {
  * \fn			main
  * \brief		The application starts here.
  *
- * \param[in]	None
+ * \param [in]	None
  * \return		0
  *****************************************************************************
  */
@@ -81,4 +81,6 @@ int main(void) {
 		delay_ms(500);
 		GPIO_bit_set(Onboard, 2);
 	}
+
+	return 0;
 }

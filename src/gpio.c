@@ -87,22 +87,24 @@ PORT_PIN_t Onboard_Port_Pin[] = {
 };
 
 PORT_PIN_t HeaderJ1_Port_Pin[] = {
-		{ FPTC, PIN_7  },		/* J1 01	*/
-		{ FPTA, PIN_1  },		/* J1 02	*/
-		{ FPTC, PIN_0  },		/* J1 03	*/
-		{ FPTA, PIN_2  },		/* J1 04	*/
-		{ FPTC, PIN_3  },		/* J1 05	*/
-		{ FPTD, PIN_4  },		/* J1 06	*/
-		{ FPTC, PIN_4  },		/* J1 07	*/
-		{ FPTA, PIN_12 },		/* J1 08	*/
-		{ FPTC, PIN_5  },		/* J1 09	*/
-		{ FPTA, PIN_4  },		/* J1 10	*/
-		{ FPTC, PIN_6  },		/* J1 11	*/
-		{ FPTA, PIN_5  },		/* J1 12	*/
-		{ FPTC, PIN_10 },		/* J1 13	*/
-		{ FPTC, PIN_8  },		/* J1 14	*/
-		{ FPTC, PIN_11 },		/* J1 15	*/
-		{ FPTC, PIN_9  },		/* J1 16	*/
+		{ FPTC, PIN_7        },	/* J1 01	*/
+		{ 0, 0 /* UART Rx */ },	/* J1 02	*/
+//		{ FPTA, PIN_1        },	/* J1 02	*/
+		{ FPTC, PIN_0        },	/* J1 03	*/
+		{ 0, 0 /* UART Tx */ },	/* J1 04	*/
+//		{ FPTA, PIN_2        },	/* J1 04	*/
+		{ FPTC, PIN_3        },	/* J1 05	*/
+		{ FPTD, PIN_4        },	/* J1 06	*/
+		{ FPTC, PIN_4        },	/* J1 07	*/
+		{ FPTA, PIN_12       },	/* J1 08	*/
+		{ FPTC, PIN_5        },	/* J1 09	*/
+		{ FPTA, PIN_4        },	/* J1 10	*/
+		{ FPTC, PIN_6        },	/* J1 11	*/
+		{ FPTA, PIN_5        },	/* J1 12	*/
+		{ FPTC, PIN_10       },	/* J1 13	*/
+		{ FPTC, PIN_8        },	/* J1 14	*/
+		{ FPTC, PIN_11       },	/* J1 15	*/
+		{ FPTC, PIN_9        },	/* J1 16	*/
 };
 
 PORT_PIN_t HeaderJ2_Port_Pin[] = {
@@ -119,9 +121,9 @@ PORT_PIN_t HeaderJ2_Port_Pin[] = {
 		{ FPTA, PIN_17         },		/* J2 11	*/
 		{ FPTD, PIN_1          },		/* J2 12	*/
 		{ FPTE, PIN_31         },		/* J2 13	*/
-		{ 0, 0 /* GND */       },		/* J2 14	*/
-		{ 0, 0 /* NC */        },		/* J2 15	*/
-		{ 0, 0 /* VREFH */     },		/* J2 16	*/
+		{ 0, 0 /* GND		*/ },		/* J2 14	*/
+		{ 0, 0 /* NC		*/ },		/* J2 15	*/
+		{ 0, 0 /* VREFH		*/ },		/* J2 16	*/
 		{ FPTD, PIN_6          },		/* J2 17	*/
 		{ FPTE, PIN_1          },		/* J2 18	*/
 		{ FPTD, PIN_7          },		/* J2 19	*/
@@ -130,21 +132,21 @@ PORT_PIN_t HeaderJ2_Port_Pin[] = {
 
 PORT_PIN_t HeaderJ9_Port_Pin[] = {
 		{ FPTB, PIN_8          },	/* J9 01	*/
-		{ 0, 0 /* PTD5 */      },	/* J9 02	*/
+		{ 0, 0 /* PTD5		*/ },	/* J9 02	*/
 		{ FPTB, PIN_9          },	/* J9 03	*/
-		{ 0, 0 /* P3V3 */      },	/* J9 04	*/
+		{ 0, 0 /* P3V3		*/ },	/* J9 04	*/
 		{ FPTB, PIN_10         },	/* J9 05	*/
 		{ FPTA, PIN_20         },	/* J9 06	*/
 		{ FPTB, PIN_11         },	/* J9 07	*/
-		{ 0, 0 /* P3V3 */      },	/* J9 08	*/
+		{ 0, 0 /* P3V3		*/ },	/* J9 08	*/
 		{ FPTE, PIN_2          },	/* J9 09	*/
-		{ 0, 0 /* P5V_USB */   },	/* J9 10	*/
+		{ 0, 0 /* P5V_USB	*/ },	/* J9 10	*/
 		{ FPTE, PIN_3          },	/* J9 11	*/
-		{ 0, 0 /* GND */       },	/* J9 12	*/
+		{ 0, 0 /* GND		*/ },	/* J9 12	*/
 		{ FPTE, PIN_4          },	/* J9 13	*/
-		{ 0, 0 /* GND */       },	/* J9 14	*/
+		{ 0, 0 /* GND		*/ },	/* J9 14	*/
 		{ FPTE, PIN_5          },	/* J9 15	*/
-		{ 0, 0 /* P5-9V_VIN */ },	/* J9 16	*/
+		{ 0, 0 /* P5-9V_VIN	*/ },	/* J9 16	*/
 };
 
 PORT_PIN_t HeaderJ10_Port_Pin[] = {
@@ -194,13 +196,17 @@ PORT_PIN_t ArduinoD_Port_Pin[] = {
 /**
  *****************************************************************************
  * \fn			GPIO_init
- * \brief		Configure  GPIOs for the RGB LED
+ * \brief		Configure onboard GPIOs like RGB LED, Accelerator, Touch
+ *				Slide and I2C. Configure too the header pins.
+ *
+ * \param		None
+ * \return		None
  *****************************************************************************
  */
 void GPIO_init(void) {
 	uint8_t i;
 
-	SIM->SCGC5 |= 0x3E00;					/* Enable all GPIO clocks		*/
+	SIM->SCGC5 |= 0x00003E00;				/* Enable all GPIO clocks		*/
 
 	for (i = 0; i < sizeof(Onboard_Port_Pin) / sizeof(PORT_PIN_t); i++) {
 		if (Onboard_Port_Pin[i].GPIOx != 0) {
@@ -258,9 +264,10 @@ void GPIO_init(void) {
  * \fn			GPIO_bit_set
  * \brief		Set a GPIO bit on the specific port.
  *
- * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
+ * \param [in]	port: Can be one of the following values: Onboard, HeaderJ1,
  *				HeaderJ2, HeaderJ9, HeaderJ10, ArduinoA, ArduinoD.
- * \param[in]	bit: Specify the bit number on the port.
+ * \param [in]	bit: Specify the bit number on the port.
+ * \return		None
  *****************************************************************************
  */
 void GPIO_bit_set(PORT_NAME port, uint8_t bit) {
@@ -317,9 +324,10 @@ void GPIO_bit_set(PORT_NAME port, uint8_t bit) {
  * \fn			GPIO_bit_reset
  * \brief		Set a GPIO bit on the specific port.
  *
- * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
+ * \param [in]	port: Can be one of the following values: Onboard, HeaderJ1,
  *				HeaderJ2, HeaderJ9, HeaderJ10, ArduinoA, ArduinoD.
- * \param[in]	bit: Specify the bit number on the port.
+ * \param [in]	bit: Specify the bit number on the port.
+ * \return		None
  *****************************************************************************
  */
 void GPIO_bit_reset(PORT_NAME port, uint8_t bit) {
@@ -376,9 +384,10 @@ void GPIO_bit_reset(PORT_NAME port, uint8_t bit) {
  * \fn			GPIO_port_set
  * \brief		Set a GPIO port to a value.
  *
- * \param[in]	port: Can be one of the following values: Onboard, HeaderJ1,
+ * \param [in]	port: Can be one of the following values: Onboard, HeaderJ1,
  *				HeaderJ2, HeaderJ9, HeaderJ10, ArduinoA, ArduinoD.
- * \param[in]	value: Value to set to the port.
+ * \param [in]	value: Value to set to the port.
+ * \return		None
  *****************************************************************************
  */
 void GPIO_port_set(PORT_NAME port, uint16_t value) {
