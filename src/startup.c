@@ -43,6 +43,7 @@ extern unsigned long _sdata, _edata, _sidata, _sbss, _ebss;
 extern unsigned long _estack;
 //extern void __libc_init_array();
 extern void SystemInit();
+extern void SystemCoreClockUpdate();
 extern void main();
 
 /**
@@ -88,6 +89,7 @@ __attribute__((naked)) void Reset_Handler() {
 
   /* Initialize System */
   SystemInit();
+  SystemCoreClockUpdate();
 
   /* Jump to main */
   main();

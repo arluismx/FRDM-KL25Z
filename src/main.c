@@ -18,6 +18,7 @@
 /*----- Header-Files -------------------------------------------------------*/
 #include <MKL25Z4.H>
 #include "gpio.h"
+#include "uart.h"
 
 /*----- Macros -------------------------------------------------------------*/
 
@@ -64,9 +65,11 @@ static void delay_ms(uint32_t dlyTicks) {
  *****************************************************************************
  */
 int main(void) {
-	SystemCoreClockUpdate();				/* Get Core Clock Frequency		*/
 	SysTick_Config(SystemCoreClock / 1000);	/* Generate interrupt each 1 ms	*/
 	GPIO_init();							/* Initialize GPIOs				*/
+	UART_init(UART0, 115200);
+//	UART_sendstring(UART0, "\033c\033[2J\033[?25l");
+//	UART_sendstring(UART0, "Hello World\r\n");
 
 	for (;;) {
 		GPIO_bit_reset(Onboard, 0);
